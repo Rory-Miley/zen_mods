@@ -4,21 +4,16 @@
   .tabbrowser-tab:is([selected], [visuallyselected], [multiselected]):not([zen-glance-tab])
   > .tab-stack
   > .tab-background {
-  --tab-highlight-color: var(
-    --identity-tab-color,
-    var(--tab-group-color-invert, var(--zen-primary-color, var(--tab-group-color-gray-invert, AccentColor)))
+  --firefox-gradient: linear-gradient(135deg, #ff9400 0%, #ff4f5e 50%, #9059ff 100%);
+  --firefox-tint: linear-gradient(
+    135deg,
+    color-mix(in srgb, #ff9400 20%, light-dark(#ffffff, #2b2a33)),
+    color-mix(in srgb, #9059ff 20%, light-dark(#ffffff, #2b2a33))
   );
-  background: color-mix(
-    in srgb,
-    var(--tab-highlight-color) 10%,
-    transparent
-  ) !important;
-  border: 2.5px solid
-    color-mix(
-      in srgb,
-      var(--tab-highlight-color) 90%,
-      transparent
-    ) !important;
+  border: 2.5px solid transparent !important;
+  background:
+    var(--firefox-tint) padding-box,
+    var(--firefox-gradient) border-box !important;
   box-sizing: border-box !important;
   opacity: 1 !important;
 }
