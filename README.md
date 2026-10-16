@@ -1,8 +1,7 @@
-# Active Tab Halo (Zen Mod)
+# Zen Mods
 
-A custom [Zen Browser](https://zen-browser.app/) mod that highlights **only the active tab** with a Firefox-style colored border and subtle background tint.
+A collection of custom mods for [Zen Browser](https://zen-browser.app/).
 
-## Features
-- **Active Tab Only**: Leaves inactive tabs clean and unstyled.
-- **Universal Tab Support**: Works on standard tabs, Multi-Account Container tabs (automatically matching the container color), tab groups, and Zen Essential tabs.
-- **Sidebar Compatible**: Works seamlessly in both the compact (collapsed icon-only) tab sidebar and the full-size (expanded) tab sidebar.
+## Mods
+
+- **[Active Tab Halo](./active-tab-halo)** — Highlights only the active tab (container or standard) with a Firefox-style colored border and subtle background tint across both compact and full-size sidebars.
