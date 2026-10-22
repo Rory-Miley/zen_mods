@@ -1,13 +1,37 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 set -euo pipefail
 
 # Root of the zen_mods repository
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-ZEN_PROFILES_DIR="${HOME}/Library/Application Support/zen/Profiles"
+
+# Detect OS and locate Zen profiles directory
+OS_NAME="$(uname -s)"
+case "$OS_NAME" in
+  Darwin)
+    ZEN_PROFILES_DIR="${HOME}/Library/Application Support/zen/Profiles"
+    ;;
+  Linux)
+    if [[ -d "${XDG_CONFIG_HOME:-$HOME/.config}/zen" ]]; then
+      ZEN_PROFILES_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/zen"
+    elif [[ -d "${HOME}/.zen" ]]; then
+      ZEN_PROFILES_DIR="${HOME}/.zen"
+    elif [[ -d "${HOME}/.var/app/app.zen_browser.zen/.zen" ]]; then
+      ZEN_PROFILES_DIR="${HOME}/.var/app/app.zen_browser.zen/.zen"
+    else
+      ZEN_PROFILES_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/zen"
+    fi
+    ;;
+  *)
+    echo "Error: Unsupported OS '$OS_NAME'. Set ZEN_PROFILE=\"/path/to/profile\" manually." >&2
+    exit 1
+    ;;
+esac
 
 # Find active Zen profile (defaults to *.Default (release))
 if [[ -z "${ZEN_PROFILE:-}" ]]; then
-  ZEN_PROFILE="$(find "$ZEN_PROFILES_DIR" -maxdepth 1 -type d -name "*.Default (release)" | head -n 1)"
+  if [[ -d "$ZEN_PROFILES_DIR" ]]; then
+    ZEN_PROFILE="$(find "$ZEN_PROFILES_DIR" -maxdepth 1 -type d -name "*.Default (release)" | head -n 1)"
+  fi
 fi
 
 if [[ -z "$ZEN_PROFILE" || ! -d "$ZEN_PROFILE" ]]; then
